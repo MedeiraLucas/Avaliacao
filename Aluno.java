@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-
-
 public class Aluno {
     int idAluno;
     String nomeAluno;
