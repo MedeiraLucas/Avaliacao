@@ -11,7 +11,7 @@ public class Cadastro {
         ArrayList<Aluno> alunos = new ArrayList<>();
 
         do {
-            // Aqui vamos imprimir as opções para iniciar os cadastros.
+            // Opções de cadastro
             System.out.println("Opções: ");
             System.out.println("1. Cadastrar Professor");
             System.out.println("2. Cadastrar Curso");
@@ -24,65 +24,61 @@ public class Cadastro {
             try {
                 opt = scanner.nextInt();
             } catch (Exception e) {
-                System.out.println("Opção Invalida");
-                scanner.nextLine();
+                System.out.println("Opção Inválida");
+                scanner.nextLine(); // Limpa a entrada
                 continue;
             }
 
             switch (opt) {
-                case 1: // aqui iremos fornecer as informacoes
+                case 1: // Cadastro de professor
                     System.out.println("Digite o id do Professor: ");
                     int idProfessor = scanner.nextInt();
                     System.out.println("Digite o nome: ");
                     String nomeProfessor = scanner.next();
-                    Professor professor = new Professor(idProfessor, nomeProfessor);
-                    professores.add(professor);
+                    professores.add(new Professor(idProfessor, nomeProfessor));
                     break;
 
-                case 2:
+                case 2: // Cadastro de curso
                     System.out.println("Digite o id do curso: ");
                     int idCurso = scanner.nextInt();
                     System.out.println("Digite o nome do curso: ");
                     String nomeCurso = scanner.next();
                     System.out.println("Digite a carga horária do curso: ");
                     int cargaHoraria = scanner.nextInt();
-                    Curso curso = new Curso(idCurso, nomeCurso, cargaHoraria);
-                    cursos.add(curso);
+                    cursos.add(new Curso(idCurso, nomeCurso, cargaHoraria));
                     break;
 
-                case 3:
+                case 3: // Cadastro de aluno
                     System.out.println("Digite o id do Aluno: ");
                     int idAluno = scanner.nextInt();
                     System.out.println("Digite o nome do Aluno: ");
                     String nomeAluno = scanner.next();
-                    System.out.println("Digite a sua data de Nascimento: ");
+                    System.out.println("Digite a data de Nascimento: ");
                     String dataNascimento = scanner.next();
                     System.out.println("Digite o CPF: ");
                     String cpf = scanner.next();
-                    Aluno aluno = new Aluno(idAluno, nomeAluno, dataNascimento, cpf);
-                    alunos.add(aluno);
+                    alunos.add(new Aluno(idAluno, nomeAluno, dataNascimento, cpf));
                     break;
 
-                case 4:
+                case 4: // Listar professores
                     for (Professor prof : professores) {
                         System.out.println("Professor: " + prof.getNome());
                     }
                     break;
 
-                case 5:
+                case 5: // Listar cursos
                     for (Curso cur : cursos) {
                         System.out.println("Curso: " + cur.getNome() + " - Carga Horária: " + cur.getCargaHoraria());
                     }
                     break;
 
-                case 6:
+                case 6: // Listar alunos
                     for (Aluno al : alunos) {
-                        System.out.println("Aluno: " + al.getNome() + " - Data de Nascimento: " + al.getDataNascimento()
-                                + " - CPF: " + al.getCpf());
+                        System.out.println("Aluno: " + al.getNome() + " - Data de Nascimento: " + al.getDataNascimento() + " - CPF: " + al.getCpf());
                     }
                     break;
 
-                case 7:
+                case 7: // Sair do programa
                     System.out.println("Saindo...");
                     break;
 
@@ -93,65 +89,5 @@ public class Cadastro {
         } while (opt != 7);
 
         scanner.close();
-    }
-}
-
-class Professor {
-    private int id;
-    private String nome;
-
-    public Professor(int id, String nome) {
-        this.id = id;
-        this.nome = nome;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-}
-
-class Curso {
-    private int id;
-    private String nome;
-    private int cargaHoraria;
-
-    public Curso(int id, String nome, int cargaHoraria) {
-        this.id = id;
-        this.nome = nome;
-        this.cargaHoraria = cargaHoraria;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public int getCargaHoraria() {
-        return cargaHoraria;
-    }
-}
-
-class Aluno {
-    private int id;
-    private String nome;
-    private String dataNascimento;
-    private String cpf;
-
-    public Aluno(int id, String nome, String dataNascimento, String cpf) {
-        this.id = id;
-        this.nome = nome;
-        this.dataNascimento = dataNascimento;
-        this.cpf = cpf;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public String getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public String getCpf() {
-        return cpf;
     }
 }
