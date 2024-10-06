@@ -78,7 +78,7 @@ public class Cadastro {
                     }
                     break;
 
-                case 7: // Sair do programa
+                case 7:
                     System.out.println("Saindo...");
                     break;
 
