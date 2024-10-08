@@ -62,19 +62,19 @@ public class Cadastro {
 
                 case 4: // Listar professores
                     for (Professor prof : professores) {
-                        System.out.println("Professor: " + prof.getNome());
+                        System.out.println("Professor: " + prof.Nome());
                     }
                     break;
 
                 case 5: // Listar cursos
                     for (Curso cur : cursos) {
-                        System.out.println("Curso: " + cur.getNome() + " - Carga Horária: " + cur.getCargaHoraria());
+                        System.out.println("Curso: " + cur.Nome() + " - Carga Horária: " + cur.CargaHoraria());
                     }
                     break;
 
                 case 6: // Listar alunos
                     for (Aluno al : alunos) {
-                        System.out.println("Aluno: " + al.getNome() + " - Data de Nascimento: " + al.getDataNascimento() + " - CPF: " + al.getCpf());
+                        System.out.println("Aluno: " + al.Nome() + " - Data de Nascimento: " + al.DataNascimento() + " - CPF: " + al.Cpf());
                     }
                     break;
 
