@@ -25,7 +25,7 @@ public class Cadastro {
                 opt = scanner.nextInt();
             } catch (Exception e) {
                 System.out.println("Opção Inválida");
-                scanner.nextLine(); // Limpa a entrada
+                scanner.nextLine(); 
                 continue;
             }
 
