@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 public class Curso {
     int idCurso;
     String nomeCurso;
