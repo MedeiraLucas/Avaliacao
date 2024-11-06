@@ -1,14 +1,8 @@
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-
-
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Cadastro {
@@ -17,11 +11,8 @@ public class Cadastro {
         final String url = "jdbc:mysql://localhost:3306/cadastro";
         final String user = "root";
         final String password = "";
-        int opt = 0;
         Scanner scanner = new Scanner(System.in);
-        ArrayList<Professor> professores = new ArrayList<>();
-        ArrayList<Curso> cursos = new ArrayList<>();
-        ArrayList<Aluno> alunos = new ArrayList<>();
+        int opt = 0;
 
         do {
             // Opções de cadastro
@@ -43,61 +34,101 @@ public class Cadastro {
             }
 
             switch (opt) {
-                case 1: // Cadastro de professor
-                    System.out.println("Digite o nome: ");
-                    String nomeProfessor = scanner.next();
-                    Connection con = DriverManager.getConnection(url, user, password);
-                    Statement stm = con.createStatement();
-                    boolean sql = stm.execute("INSERT INTO Professor "
-                        + "(nome, departamento) VALUES "
-                        + "('"+nomeProfessor+"','"+departamento+"')");
-                    if(!sql) {
-                        System.out.println("Falha na execução");
-                    }
-                    con.close();
-                } catch (SQLException e) {
-                    System.out.println(e.getMessage());
-                }
-                break;
-                    
-
-                case 2: // Cadastro de curso
-                    System.out.println("Digite o id do curso: ");
-                    int idCurso = scanner.nextInt();
-                    System.out.println("Digite o nome do curso: ");
-                    String nomeCurso = scanner.next();
-                    System.out.println("Digite a carga horária do curso: ");
-                    int cargaHoraria = scanner.nextInt();
-                    cursos.add(new Curso(idCurso, nomeCurso, cargaHoraria));
-                    break;
-
-                case 3: // Cadastro de aluno
-                    System.out.println("Digite o id do Aluno: ");
-                    int idAluno = scanner.nextInt();
-                    System.out.println("Digite o nome do Aluno: ");
-                    String nomeAluno = scanner.next();
-                    System.out.println("Digite a data de Nascimento: ");
-                    String dataNascimento = scanner.next();
-                    System.out.println("Digite o CPF: ");
-                    String cpf = scanner.next();
-                    alunos.add(new Aluno(idAluno, nomeAluno, dataNascimento, cpf));
-                    break;
-
-                case 4: // Listar professores
-                    for (Professor prof : professores) {
-                        System.out.println("Professor: " + prof.Nome());
+                case 1:
+                    try { // Cadastro de professor
+                        System.out.println("Digite o nome: ");
+                        String nomeProfessor = scanner.next();
+                        System.out.println("Digite o departamento: ");
+                        String departamento = scanner.next();
+                        Connection con = DriverManager.getConnection(url, user, password);
+                        Statement stm = con.createStatement();
+                        boolean sql = stm.execute("INSERT INTO Professor (nome, departamento) VALUES ('" + nomeProfessor + "','" + departamento + "')");
+                        if (!sql) {
+                            System.out.println("Cadastro realizado com sucesso.");
+                        }
+                        con.close();
+                    } catch (SQLException e) {
+                        System.out.println(e.getMessage());
                     }
                     break;
 
-                case 5: // Listar cursos
-                    for (Curso cur : cursos) {
-                        System.out.println("Curso: " + cur.Nome() + " - Carga Horária: " + cur.CargaHoraria());
+                case 2:
+                    try {  // Cadastro de curso
+                        System.out.println("Digite o nome do curso: ");
+                        String nomeCurso = scanner.next();
+                        System.out.println("Digite a carga horária do curso: ");
+                        int cargaHoraria = scanner.nextInt();
+                        Connection con = DriverManager.getConnection(url, user, password);
+                        Statement stm = con.createStatement();
+                        boolean sql = stm.execute("INSERT INTO Curso (curso, cargaHoraria) VALUES ('" + nomeCurso + "', '" + cargaHoraria + "')");
+                        if (!sql) {
+                            System.out.println("Cadastro realizado com sucesso.");
+                        }
+                        con.close();
+                    } catch (SQLException e) {
+                        System.out.println(e.getMessage());
                     }
                     break;
 
-                case 6: // Listar alunos
-                    for (Aluno al : alunos) {
-                        System.out.println("Aluno: " + al.Nome() + " - Data de Nascimento: " + al.DataNascimento() + " - CPF: " + al.Cpf());
+                case 3:
+                    try {  // Cadastro de aluno
+                        System.out.println("Digite o nome do Aluno: ");
+                        String nomeAluno = scanner.next();
+                        System.out.println("Digite a data de Nascimento (yyyy-mm-dd): ");
+                        String dataNascimento = scanner.next();
+                        System.out.println("Digite o CPF: ");
+                        String cpf = scanner.next();
+                        Connection con = DriverManager.getConnection(url, user, password);
+                        Statement stm = con.createStatement();
+                        boolean sql = stm.execute("INSERT INTO Aluno (nome, cpf, data_nascimento) VALUES ('" + nomeAluno + "', '" + cpf + "', '" + dataNascimento + "')");
+                        if (!sql) {
+                            System.out.println("Cadastro realizado com sucesso.");
+                        }
+                        con.close();
+                    } catch (SQLException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+
+                case 4:
+                    try {
+                        Connection con = DriverManager.getConnection(url, user, password);
+                        Statement stm = con.createStatement();
+                        ResultSet sql = stm.executeQuery("SELECT * FROM Professor;");
+                        while (sql.next()) {
+                            System.out.println("Nome: " + sql.getString("nome") + ", Departamento: " + sql.getString("departamento"));
+                        }
+                        con.close();
+                    } catch (SQLException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+
+                case 5:
+                    try {
+                        Connection con = DriverManager.getConnection(url, user, password);
+                        Statement stm = con.createStatement();
+                        ResultSet sql = stm.executeQuery("SELECT * FROM Curso;");
+                        while (sql.next()) {
+                            System.out.println("Curso: " + sql.getString("curso") + ", Carga Horária: " + sql.getInt("cargaHoraria"));
+                        }
+                        con.close();
+                    } catch (SQLException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+
+                case 6:
+                    try {
+                        Connection con = DriverManager.getConnection(url, user, password);
+                        Statement stm = con.createStatement();
+                        ResultSet sql = stm.executeQuery("SELECT * FROM Aluno;");
+                        while (sql.next()) {
+                            System.out.println("Nome: " + sql.getString("nome") + ", Data de Nascimento: " + sql.getString("data_nascimento") + ", CPF: " + sql.getString("cpf"));
+                        }
+                        con.close();
+                    } catch (SQLException e) {
+                        System.out.println(e.getMessage());
                     }
                     break;
 
