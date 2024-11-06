@@ -13,7 +13,10 @@ import java.util.Scanner;
 
 public class Cadastro {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        final String url = "jdbc:mysql://localhost:3306/cadastro";
+        final String user = "root";
+        final String password = "";
         int opt = 0;
         Scanner scanner = new Scanner(System.in);
         ArrayList<Professor> professores = new ArrayList<>();
@@ -41,12 +44,22 @@ public class Cadastro {
 
             switch (opt) {
                 case 1: // Cadastro de professor
-                    System.out.println("Digite o id do Professor: ");
-                    int idProfessor = scanner.nextInt();
                     System.out.println("Digite o nome: ");
                     String nomeProfessor = scanner.next();
-                    professores.add(new Professor(idProfessor, nomeProfessor));
-                    break;
+                    Connection con = DriverManager.getConnection(url, user, password);
+                    Statement stm = con.createStatement();
+                    boolean sql = stm.execute("INSERT INTO Professor "
+                        + "(nome, departamento) VALUES "
+                        + "('"+nomeProfessor+"','"+departamento+"')");
+                    if(!sql) {
+                        System.out.println("Falha na execução");
+                    }
+                    con.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+                    
 
                 case 2: // Cadastro de curso
                     System.out.println("Digite o id do curso: ");
